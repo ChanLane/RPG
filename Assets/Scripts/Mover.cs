@@ -27,13 +27,23 @@ namespace ChandlerLane.Scripts.Mover
 
         void Update()
         {
-            _agent.destination = _target.transform.position;
-            
+           
             if (Input.GetMouseButtonDown(0))
             {
-                _lastRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                MoveToCursor();
             }
-            Debug.DrawRay(_lastRay.origin, _lastRay.direction * 100);    
+            
+        }
+       
+        void MoveToCursor()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitinfo;
+            
+            if (Physics.Raycast(ray, out hitinfo))
+            {
+                _agent.destination = hitinfo.point;
+            }
         }
     }
 
